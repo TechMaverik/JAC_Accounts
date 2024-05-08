@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JAC accounts</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 1500px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <img src="static/JAC_AI.png" alt="JAC Accounts"  class="img-thumbnail"/>
+      <ul class="nav nav-pills nav-stacked">
+        {% for key in dashboard %}
+        <li ><a href="{{dashboard[key]}}">{{key}}</a></li>
+        {% endfor %}
+      </ul><br>
+      <div>
+        <form action="/search" method="post">
+          <div >
+            <input type="date" class="form-control" name="from" aria-describedby="from" placeholder="from">
+          </div>
+          <br>
+          <div >
+            <input type="date" class="form-control" name="to" aria-describedby="to" placeholder="to">
+          </div>
+          <div><br></div>
+          <div>
+            <input type="submit" class="btn btn-success" name="search" aria-describedby="search" value="Search">
+          </div>
+        </form>
+        
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <h4><small>MEMBERS</small></h4>
+      <hr>
+     {% if status %}
+     <div class="alert alert-danger" role="alert">
+      Purged all table entries
+      {% endif %}     
+      
+      <form action="/delete" method="post">
+      <table class="table">
+        <thead>
+          <tr>
+            {% for table in member_tab%}
+            <th scope="col">{{table}}</th>
+            {%endfor%}
+          </tr>
+        </thead>
+        <tbody>
+          {%for row in rows%}
+          <tr>            
+            <td>{{row[0]}}</td>   
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>        
+            <td>{{row[4]}}</td>
+            <td>{{row[7]}}</td>
+            <td>{{row[6]}}</td>
+            <td>{{row[12]}}</td>
+            <td>
+              <a href="{{'/delete'}}"><input type="button" class="btn btn-danger" name="delete" aria-describedby="delete" value="delete"></a>              
+            </td>
+          </tr>
+          {%endfor%}
+        </tbody>
+    
+      </table>
+    </form>
+    </div>
+      <br><br>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
