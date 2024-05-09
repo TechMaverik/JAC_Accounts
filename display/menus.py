@@ -14,6 +14,7 @@ dashboard_menus = {
     "ActiveMembers": "/",
     "AddMembers": "/add_members",
     "CreateLedger": "/create_ledger",
+    "ViewLedger": "/view_ledger",
     "CashBook": "",
     "BankAccounts": "",
     "Receipts&Payments": "",
@@ -28,3 +29,4 @@ gender = ["-", "Male", "Female"]
 yes_no = ["-", "Yes", "No"]
 payment_type = ["Receipt", "Payment"]
 ledger_list_table = ["#", "Ledger Head", "Type", "Action"]
+ledger_view_table_head = ["Date", "Receipt No", "Description", "Amount"]

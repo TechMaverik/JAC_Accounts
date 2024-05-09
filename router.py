@@ -81,11 +81,23 @@ def receipt():
 @app.route("/delete_ledgerhead", methods=["get", "post"])
 def delete_ledgerhead():
     dashboard = menus.dashboard_menus
-
     service.delete_ledgerhead()
     return render_template(
         "delete_ledgerhead.html",
         dashboard=dashboard,
+    )
+
+
+@app.route("/view_ledger", methods=["get", "post"])
+def view_ledger():
+    dashboard = menus.dashboard_menus
+    ledger_header = service.get_ledgerlist()
+
+    return render_template(
+        "view_ledger.html",
+        dashboard=dashboard,
+        ledger_header=ledger_header,
+        ledger_view_table_head=menus.ledger_view_table_head,
     )
 
 

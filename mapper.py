@@ -1,4 +1,5 @@
 import sqlite3
+import database
 
 
 def add_members(model):
@@ -36,6 +37,11 @@ def add_members(model):
 
 
 def view_members():
+    try:
+        database.create_members()
+        database.create_ledger()
+    except:
+        pass
     with sqlite3.connect("jac_accounts.db") as conn:
         cur = conn.cursor()
         cur.execute("SELECT * from Members")
@@ -84,18 +90,26 @@ def delete_ledgerhead(name):
     conn.close()
 
 
-def generate_receipt(R_id, name, date, items_list, item_head_list):
+def generate_receipt(R_id, name, date, amount, item):
     with sqlite3.connect("jac_accounts.db") as conn:
         cur = conn.cursor()
         cur.execute(
-            "INSERT into Receipt(id , name , date  ,item, head ) VALUES(?,?,?,?,?)",
+            "INSERT into " + item + "(id , name , date  , amount ) Values(?,?,?,?)",
             (
                 R_id,
                 name,
                 date,
-                str(items_list),
-                str(item_head_list),
+                amount,
             ),
         )
         conn.commit()
     conn.close()
+
+
+def view_ledger():
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("Select * from Receipt")
+        rows = cursor.fetchall()
+    conn.close()
+    return rows

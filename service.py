@@ -1,9 +1,9 @@
 from flask import request
 from models.add_members import AddMembers
 from models.ledger import LedgerHead
-from models.ledger import Receipt
 import mapper
 import random
+import database
 
 
 def add_members():
@@ -73,14 +73,31 @@ def delete_ledgerhead():
 
 def generate_receipt():
     if request.method == "POST":
-        ledger_data = []
         ledger_head_list = get_ledgerlist()
-        R_id = str(random.randint(1, 100))
+        try:
+            database.create_ledger_tables()
+        except:
+            pass
+
         for item in ledger_head_list:
-            print(item, "<=========")
-            value = request.form.get(str(item))
-            ledger_data.append(value)
-        name = request.form.get("name")
-        date = request.form.get("date")
-        items_list = ledger_data
-        mapper.generate_receipt(R_id, name, date, items_list, ledger_head_list)
+            amount = request.form.get(str(item))
+            name = request.form.get("name")
+            date = request.form.get("date")
+            R_id = str(random.randint(1, 100))
+            print(R_id, name, date, amount, item)
+            if amount != "":
+                mapper.generate_receipt(R_id, name, date, amount, item)
+
+
+def paymentsplit(head_list, amount_list):
+    payment_split = {}
+    for key in head_list:
+        for value in amount_list:
+            payment_split[key] = value
+            amount_list.remove(value)
+            break
+    return payment_split
+
+
+def view_ledger():
+    pass

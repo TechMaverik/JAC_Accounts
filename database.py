@@ -1,5 +1,6 @@
 import sqlite3
 import logging
+import service
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename="jac_accounts.log", encoding="utf-8", level=logging.DEBUG)
@@ -31,6 +32,19 @@ def create_receipt():
     logging.info(msg="Receipt Table Created")
 
 
-create_members()
-create_ledger()
-create_receipt()
+def create_ledger_tables():
+    ledger_header_list = service.get_ledgerlist()
+    con = sqlite3.connect("jac_accounts.db")
+    for head in ledger_header_list:
+        con.execute(
+            "Create table "
+            + head
+            + "(id VARCHAR, name VARCHAR, date  VARCHAR, amount VARCHAR)"
+        )
+        logging.info(msg=head + " Table Created")
+    con.close()
+
+
+# create_members()
+# create_ledger()
+# create_ledger_tables()
