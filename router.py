@@ -61,7 +61,7 @@ def create_ledger():
     return render_template(
         "create_ledger.html",
         dashboard=menus.dashboard_menus,
-        payment_type=menus.payment_type,
+        payment_type=menus.receipt_payment,
         ledger_list_table=menus.ledger_list_table,
         rows=rows,
     )
@@ -75,6 +75,8 @@ def receipt():
         "receipt.html",
         dashboard=menus.dashboard_menus,
         ledger_header=ledger_header,
+        receipt_payment=menus.receipt_payment,
+        payment_type=menus.payment_type,
     )
 
 
@@ -92,8 +94,9 @@ def delete_ledgerhead():
 def view_ledger():
     dashboard = menus.dashboard_menus
     ledger_header = service.get_ledgerlist()
-    try:
-        ledger, sum, head = service.view_ledger()
+
+    if request.method == "POST":
+        ledger, receipt_sum, voucher_sum, head = service.view_ledger()
         return render_template(
             "view_ledger.html",
             dashboard=dashboard,
@@ -101,9 +104,10 @@ def view_ledger():
             ledger_view_table_head=menus.ledger_view_table_head,
             ledger=ledger,
             head=head,
-            sum=sum,
+            receipt_sum=receipt_sum,
+            voucher_sum=voucher_sum,
         )
-    except:
+    else:
         return render_template(
             "view_ledger.html",
             dashboard=dashboard,
@@ -115,15 +119,16 @@ def view_ledger():
 @app.route("/cashbook", methods=["get", "post"])
 def cashbook():
     dashboard = menus.dashboard_menus
-    rows, total_amount = service.cashbook()
-    total_amount = total_amount
-    print(total_amount)
+    rows, receipt_amount, voucher_amount, balance = service.cashbook()
+
     return render_template(
         "cashbook.html",
         dashboard=dashboard,
         cash_table=menus.cashbook_table,
         rows=rows,
-        total_amount=total_amount,
+        receipt_amount=receipt_amount,
+        voucher_amount=voucher_amount,
+        balance=balance,
     )
 
 

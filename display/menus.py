@@ -16,23 +16,25 @@ dashboard_menus = {
     "CreateLedger": "/create_ledger",
     "ViewLedger": "/view_ledger",
     "CashBook": "/cashbook",
-    "BankAccounts": "",
-    "Receipts&Payments": "",
-    "Income&Expenditure": "",
-    "BalanceSheet": "",
-    "Administration": "",
-    "Office": "",
     "Settings": "",
 }
 
 gender = ["-", "Male", "Female"]
 yes_no = ["-", "Yes", "No"]
-payment_type = ["Receipt", "Payment"]
-ledger_list_table = ["#", "Ledger Head", "Type", "Action"]
-ledger_view_table_head = ["Date", "Receipt No", "Description", "Amount (INR)"]
+receipt_payment = ["Receipt", "Payment"]
+ledger_list_table = ["#", "Ledger Head", "Action"]
+ledger_view_table_head = [
+    "Date",
+    "Receipt No",
+    "Party Details",
+    "Receipt (INR)",
+    "Voucher (INR)",
+]
 cashbook_table = [
     "Date",
     "Receipt",
     "Party Details",
-    "Amount",
+    "Receipt (INR)",
+    "Voucher (INR)",
 ]
+payment_type = ["cash", "cheque"]

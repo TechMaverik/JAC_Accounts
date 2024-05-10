@@ -38,7 +38,6 @@ def create_ledger():
         ledgerHead = LedgerHead(
             id=lh_id,
             name=request.form["head"],
-            type=request.form["payment_type"],
         )
         with open("static\ledger.txt", "a") as file:
             file.writelines(str(request.form["head"]))
@@ -76,7 +75,6 @@ def generate_receipt():
         counter_file = open("static\cashbook_counter.txt", "r")
         data = int(counter_file.read())
         counter_file.close()
-
         ledger_head_list = get_ledgerlist()
         try:
             database.create_ledger_tables()
@@ -84,13 +82,31 @@ def generate_receipt():
             pass
 
         for item in ledger_head_list:
-            amount = request.form.get(str(item))
+            payment_type = request.form.get("payment_type")
+            if payment_type == "Receipt":
+                receipt = request.form.get(str(item))
+                voucher = 0
+            else:
+                receipt = 0
+                voucher = request.form.get(str(item))
             name = request.form.get("name")
             date = request.form.get("date")
+            payment_method = request.form.get("payment_method")
             R_id = data
-            print(R_id, name, date, amount, item)
-            if amount != "":
-                mapper.generate_receipt(R_id, name, date, amount, item)
+            print(
+                R_id, name, date, receipt, voucher, payment_method, item, payment_type
+            )
+
+            mapper.generate_receipt(
+                R_id,
+                name,
+                date,
+                receipt,
+                voucher,
+                payment_method,
+                item,
+                payment_type,
+            )
         counter_file = open("static\cashbook_counter.txt", "w")
         data = int(data) + 1
         counter_file.write(str(data))
@@ -100,11 +116,14 @@ def generate_receipt():
 def view_ledger():
     if request.method == "POST":
         head = request.form.get("head")
-        rows, sum = mapper.view_ledger(head)
-        return rows, sum, head
+        rows, receipt_sum, voucher_sum = mapper.view_ledger(head)
+        return rows, receipt_sum, voucher_sum, head
 
 
 def cashbook():
     headers = get_ledgerlist()
-    rows, total_amount = mapper.cashbook(header=headers)
-    return rows, total_amount
+    rows, receipt_amount, voucher_amount = mapper.cashbook(header=headers)
+    rct = receipt_amount[0][0]
+    vchr = voucher_amount[0][0]
+    balance = rct - vchr
+    return rows, receipt_amount, voucher_amount, balance

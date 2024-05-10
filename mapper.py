@@ -64,11 +64,10 @@ def create_ledger(model):
     with sqlite3.connect("jac_accounts.db") as conn:
         cur = conn.cursor()
         cur.execute(
-            "INSERT into LedgerHeads(id,name,type)Values(?,?,?)",
+            "INSERT into LedgerHeads(id,name)Values(?,?)",
             (
                 model.id,
                 model.name,
-                model.type,
             ),
         )
         conn.commit()
@@ -92,17 +91,23 @@ def delete_ledgerhead(name):
     conn.close()
 
 
-def generate_receipt(R_id, name, date, amount, item):
+def generate_receipt(
+    R_id,
+    name,
+    date,
+    receipt,
+    voucher,
+    payment_method,
+    item,
+    payment_type,
+):
     with sqlite3.connect("jac_accounts.db") as conn:
         cur = conn.cursor()
         cur.execute(
-            "INSERT into " + item + "(id , name , date  , amount ) Values(?,?,?,?)",
-            (
-                R_id,
-                name,
-                date,
-                amount,
-            ),
+            "INSERT into "
+            + item
+            + "(id , name , date  , receipt_amount , voucher_amount , payment_method, payment_type ) Values(?,?,?,?,?,?,?)",
+            (R_id, name, date, receipt, voucher, payment_method, payment_type),
         )
         conn.commit()
     conn.close()
@@ -114,12 +119,18 @@ def view_ledger(header):
         cursor.execute("Select * from " + header)
         rows = cursor.fetchall()
     conn.close()
+
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("Select SUM(amount) AS Total_Amount FROM " + header)
-        sum = cursor.fetchall()
+        cursor.execute("Select SUM(receipt_amount) FROM " + header)
+        receipt_sum = cursor.fetchall()
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(voucher_amount) FROM " + header)
+        voucher_sum = cursor.fetchall()
     conn.close()
-    return rows, sum
+
+    return rows, receipt_sum, voucher_sum
 
 
 def generate_cashbook_query(x):
@@ -143,7 +154,16 @@ def cashbook(header):
     conn.close()
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("Select SUM(amount) AS Total_Amount FROM " + "(" + query + ")")
-        total_amount = cursor.fetchall()
+        cursor.execute(
+            "Select SUM(receipt_amount) AS Total_Amount FROM " + "(" + query + ")"
+        )
+        receipt_amount = cursor.fetchall()
     conn.close()
-    return rows, total_amount
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "Select SUM(voucher_amount) AS Total_Amount FROM " + "(" + query + ")"
+        )
+        voucher_amount = cursor.fetchall()
+    conn.close()
+    return rows, receipt_amount, voucher_amount

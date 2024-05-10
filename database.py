@@ -18,7 +18,7 @@ def create_members():
 
 def create_ledger():
     con = sqlite3.connect("jac_accounts.db")
-    con.execute("Create table LedgerHeads(id VARCHAR, name VARCHAR, type VARCHAR)")
+    con.execute("Create table LedgerHeads(id VARCHAR, name VARCHAR)")
     con.close()
     logging.info(msg="Ledger Table Created")
 
@@ -30,7 +30,7 @@ def create_ledger_tables():
         con.execute(
             "Create table "
             + head
-            + "(id VARCHAR, name VARCHAR, date  VARCHAR, amount VARCHAR)"
+            + "(id VARCHAR, name VARCHAR, date  VARCHAR, receipt_amount VARCHAR, voucher_amount VARCHAR, payment_method VARCHAR, payment_type VARCHAR)"
         )
         logging.info(msg=head + " Table Created")
     con.close()

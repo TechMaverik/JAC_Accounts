@@ -49,7 +49,7 @@
     <div class="col-sm-9">
       <h4><small>CREATE LEDGER</small></h4>
       <hr>
-      <br>
+     
       <form action="/create_ledger" method="post">
         <div>
             <label for="ID">Ledger Head Name</label>
@@ -57,18 +57,11 @@
         <div class="form-group">
             <input type="text" class="form-control" name="head" aria-describedby="head" placeholder="Ledger Head">
           </div> 
-          <div class="form-group">         
-            <select  class="form-group" name="payment_type">
-              {%for option in payment_type %}
-              <option>{{option}}</option>
-              {%endfor%}          
-            </select>
+          <div class="form-group">  
           </div>
         <div class="form-group">
           <button type="submit" class="btn btn-success">Add Ledger Head</button>
-          
         </div>
-
       </form>
     </div>
 
@@ -87,8 +80,7 @@
           {%for row in rows%}
           <tr>
             <td>{{row[0]}}</td>
-            <td>{{row[1]}}</td>
-            <td>{{row[2]}}</td>
+            <td>{{row[1]}}</td>           
             <td>
               <a href="{{'/receipt'}}"><input type="button" class="btn btn-success" name="generate" aria-describedby="generate" value="generate"></a> &nbsp;
               <a href="{{'/delete_ledgerhead'}}"><input type="button" class="btn btn-danger" name="delete" aria-describedby="delete" value="delete"></a>              

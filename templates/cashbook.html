@@ -64,15 +64,23 @@
               <td>{{data[0]}}</td>
               <td>{{data[1]}}</td>
               <td>{{data[3]}}</td>
+              <td>{{data[4]}}</td>
             </tr>
           </tbody>
           {%endfor%}
       </table>
-      {%if total_amount!=None%} 
-      {%for amt in total_amount %}
-      <h3>Total Amount: {{amt[0]}} INR </h3> 
+      {%if receipt_amount!=None%} 
+      {%for amt in receipt_amount %}
+      <h3 style="color: green;">Total Receipt Amount: {{receipt_amount[0][0]}} INR </h3> 
       {%endfor%}    
       {%endif%} 
+
+      {%if voucher_amount!=None%} 
+      {%for amt in voucher_amount %}
+      <h3 style="color: red;">Total Voucher Amount: {{voucher_amount[0][0]}} INR </h3> 
+      {%endfor%}    
+      {%endif%} 
+      <h3 style="color: green;">Balance: {{balance}}</h3>
       
     </div>
       <br><br>

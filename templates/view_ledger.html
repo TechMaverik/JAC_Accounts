@@ -80,10 +80,13 @@
             {%if ledger!=None%}  
             {%for row in ledger%}        
             <tr>
-              <td>{{row[2]}}</td>   
+              <td>{{row[2]}}</td>  
               <td>{{row[0]}}</td>   
-              <td>{{row[1]}}</td>   
-              <td>{{row[3]}}</td>         
+              <td>{{row[1]}}</td>              
+              <td>{{row[3]}}</td>              
+              <td>{{row[4]}}</td>
+                          
+                 
             </tr>  
             {%endfor%}
             {%endif%}   
@@ -91,9 +94,14 @@
           </tbody>
       </table>
       
-      {%if sum!=None%} 
-      {%for amt in sum %}
-      <h3>Total Amount: {{amt[0]}} INR </h3> 
+      {%if receipt_sum!=None%} 
+      {%for amt in receipt_sum %}
+      <h3>Total Receipt Amount: {{receipt_sum[0][0]}} INR </h3> 
+      {%endfor%}    
+      {%endif%} 
+      {%if voucher_sum!=None%} 
+      {%for amt in voucher_sum %}
+      <h3>Total Voucher Amount: {{voucher_sum[0][0]}} INR </h3> 
       {%endfor%}    
       {%endif%} 
       
