@@ -92,12 +92,38 @@ def delete_ledgerhead():
 def view_ledger():
     dashboard = menus.dashboard_menus
     ledger_header = service.get_ledgerlist()
+    try:
+        ledger, sum, head = service.view_ledger()
+        return render_template(
+            "view_ledger.html",
+            dashboard=dashboard,
+            ledger_header=ledger_header,
+            ledger_view_table_head=menus.ledger_view_table_head,
+            ledger=ledger,
+            head=head,
+            sum=sum,
+        )
+    except:
+        return render_template(
+            "view_ledger.html",
+            dashboard=dashboard,
+            ledger_header=ledger_header,
+            ledger_view_table_head=menus.ledger_view_table_head,
+        )
 
+
+@app.route("/cashbook", methods=["get", "post"])
+def cashbook():
+    dashboard = menus.dashboard_menus
+    rows, total_amount = service.cashbook()
+    total_amount = total_amount
+    print(total_amount)
     return render_template(
-        "view_ledger.html",
+        "cashbook.html",
         dashboard=dashboard,
-        ledger_header=ledger_header,
-        ledger_view_table_head=menus.ledger_view_table_head,
+        cash_table=menus.cashbook_table,
+        rows=rows,
+        total_amount=total_amount,
     )
 
 

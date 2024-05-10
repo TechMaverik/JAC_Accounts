@@ -73,6 +73,10 @@ def delete_ledgerhead():
 
 def generate_receipt():
     if request.method == "POST":
+        counter_file = open("static\cashbook_counter.txt", "r")
+        data = int(counter_file.read())
+        counter_file.close()
+
         ledger_head_list = get_ledgerlist()
         try:
             database.create_ledger_tables()
@@ -83,21 +87,24 @@ def generate_receipt():
             amount = request.form.get(str(item))
             name = request.form.get("name")
             date = request.form.get("date")
-            R_id = str(random.randint(1, 100))
+            R_id = data
             print(R_id, name, date, amount, item)
             if amount != "":
                 mapper.generate_receipt(R_id, name, date, amount, item)
-
-
-def paymentsplit(head_list, amount_list):
-    payment_split = {}
-    for key in head_list:
-        for value in amount_list:
-            payment_split[key] = value
-            amount_list.remove(value)
-            break
-    return payment_split
+        counter_file = open("static\cashbook_counter.txt", "w")
+        data = int(data) + 1
+        counter_file.write(str(data))
+        counter_file.close()
 
 
 def view_ledger():
-    pass
+    if request.method == "POST":
+        head = request.form.get("head")
+        rows, sum = mapper.view_ledger(head)
+        return rows, sum, head
+
+
+def cashbook():
+    headers = get_ledgerlist()
+    rows, total_amount = mapper.cashbook(header=headers)
+    return rows, total_amount

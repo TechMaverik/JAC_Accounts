@@ -23,15 +23,6 @@ def create_ledger():
     logging.info(msg="Ledger Table Created")
 
 
-def create_receipt():
-    con = sqlite3.connect("jac_accounts.db")
-    con.execute(
-        "Create table Receipt(id VARCHAR, name VARCHAR, date  VARCHAR,item VARCHAR, head VARCHAR)"
-    )
-    con.close()
-    logging.info(msg="Receipt Table Created")
-
-
 def create_ledger_tables():
     ledger_header_list = service.get_ledgerlist()
     con = sqlite3.connect("jac_accounts.db")
@@ -43,8 +34,3 @@ def create_ledger_tables():
         )
         logging.info(msg=head + " Table Created")
     con.close()
-
-
-# create_members()
-# create_ledger()
-# create_ledger_tables()

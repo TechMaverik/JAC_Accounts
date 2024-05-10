@@ -1,5 +1,6 @@
 import sqlite3
 import database
+import service
 
 
 def add_members(model):
@@ -40,6 +41,7 @@ def view_members():
     try:
         database.create_members()
         database.create_ledger()
+        database.create_cashbook()
     except:
         pass
     with sqlite3.connect("jac_accounts.db") as conn:
@@ -106,10 +108,42 @@ def generate_receipt(R_id, name, date, amount, item):
     conn.close()
 
 
-def view_ledger():
+def view_ledger(header):
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("Select * from Receipt")
+        cursor.execute("Select * from " + header)
         rows = cursor.fetchall()
     conn.close()
-    return rows
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS Total_Amount FROM " + header)
+        sum = cursor.fetchall()
+    conn.close()
+    return rows, sum
+
+
+def generate_cashbook_query(x):
+    UNION = " UNION "
+    SELECT_QUERY = "SELECT * FROM "
+    queryList = []
+    for head in x:
+        query = SELECT_QUERY + head + UNION
+        queryList.append(query)
+    listToStr = " ".join([str(elem) for elem in queryList])
+    query = listToStr[: listToStr.rfind("UNION")]
+    return query
+
+
+def cashbook(header):
+    query = generate_cashbook_query(header)
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute(query)
+        rows = cursor.fetchall()
+    conn.close()
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS Total_Amount FROM " + "(" + query + ")")
+        total_amount = cursor.fetchall()
+    conn.close()
+    return rows, total_amount

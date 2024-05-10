@@ -45,63 +45,40 @@
         <li ><a href="{{dashboard[key]}}">{{key}}</a></li>
         {% endfor %}
       </ul><br>      
-    </div>    
+    </div>
     <div class="col-sm-9">
-      <h4><small>LEDGER VIEWER</small></h4>
-      <hr>
-      <br>
-      <form action="view_ledger" method="post">
-        <div>
-          
-        </div>
-        <div class="form-group">         
-          <label for="ID">Ledger Head Name</label>
-          <select  class="form-group" name="head">
-            {%for option in ledger_header %}
-            <option>{{option}}</option>
-            {%endfor%}          
-          </select>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-success">Load Ledger</button>            
-          </div>
-      </form>
-      <h4><b>{{head}}</b></h4>
+      <h4><small>CASH BOOK</small></h4>
       <hr>
       <table class="table">
         <thead>
             <tr>
-              {% for table in ledger_view_table_head%}
+              {% for table in cash_table%}
               <th scope="col">{{table}}</th>
               {%endfor%}
             </tr>
           </thead>
-          <tbody>  
-            {%if ledger!=None%}  
-            {%for row in ledger%}        
+          {% for data in rows%}
+          <tbody>
             <tr>
-              <td>{{row[2]}}</td>   
-              <td>{{row[0]}}</td>   
-              <td>{{row[1]}}</td>   
-              <td>{{row[3]}}</td>         
-            </tr>  
-            {%endfor%}
-            {%endif%}   
-                         
+              <td>{{data[2]}}</td>
+              <td>{{data[0]}}</td>
+              <td>{{data[1]}}</td>
+              <td>{{data[3]}}</td>
+            </tr>
           </tbody>
+          {%endfor%}
       </table>
-      
-      {%if sum!=None%} 
-      {%for amt in sum %}
+      {%if total_amount!=None%} 
+      {%for amt in total_amount %}
       <h3>Total Amount: {{amt[0]}} INR </h3> 
       {%endfor%}    
       {%endif%} 
       
-    </div>   
+    </div>
       <br><br>
     </div>
   </div>
 </div>
-    
+
 </body>
 </html>
