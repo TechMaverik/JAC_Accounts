@@ -161,7 +161,7 @@ def cashbook(header):
     query = generate_cashbook_query(header)
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute(query + "WHERE receipt_amount AND voucher_amount == 0")
+        cursor.execute(query)
         # + "WHERE receipt_amount AND voucher_amount != 0"
         rows = cursor.fetchall()
     conn.close()
