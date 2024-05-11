@@ -30,7 +30,7 @@ def create_ledger_tables():
         con.execute(
             "Create table "
             + head
-            + "(id VARCHAR, name VARCHAR, date  VARCHAR, receipt_amount VARCHAR, voucher_amount VARCHAR, payment_method VARCHAR, payment_type VARCHAR)"
+            + "(id VARCHAR, name VARCHAR, date  VARCHAR, receipt_amount VARCHAR, voucher_amount VARCHAR, payment_method VARCHAR, payment_type VARCHAR, receipt_index VARCHAR, voucher_index VARCHAR)"
         )
         logging.info(msg=head + " Table Created")
     con.close()

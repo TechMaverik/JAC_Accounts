@@ -72,8 +72,11 @@ def delete_ledgerhead():
 
 def generate_receipt():
     if request.method == "POST":
-        counter_file = open("static\cashbook_counter.txt", "r")
-        data = int(counter_file.read())
+        counter_file = open("static\\cashbook_counter.txt", "r")
+        receipt_index = int(counter_file.read())
+        counter_file.close()
+        counter_file = open("static\\voucher_counter.txt", "r")
+        voucher_index = int(counter_file.read())
         counter_file.close()
         ledger_head_list = get_ledgerlist()
         try:
@@ -86,19 +89,23 @@ def generate_receipt():
             if payment_type == "Receipt":
                 receipt = request.form.get(str(item))
                 voucher = 0
+                counter_file = open("static\\cashbook_counter.txt", "w")
+                data = int(receipt_index) + 1
+                counter_file.write(str(data))
+                counter_file.close()
             else:
                 receipt = 0
                 voucher = request.form.get(str(item))
+                counter_file = open("static\\voucher_counter.txt", "w")
+                data = int(voucher_index) + 1
+                counter_file.write(str(data))
+                counter_file.close()
             name = request.form.get("name")
             date = request.form.get("date")
             payment_method = request.form.get("payment_method")
-            R_id = data
+            id = random.randint(1, 1000)
             print(
-                R_id, name, date, receipt, voucher, payment_method, item, payment_type
-            )
-
-            mapper.generate_receipt(
-                R_id,
+                id,
                 name,
                 date,
                 receipt,
@@ -106,11 +113,22 @@ def generate_receipt():
                 payment_method,
                 item,
                 payment_type,
+                receipt_index,
+                voucher_index,
             )
-        counter_file = open("static\cashbook_counter.txt", "w")
-        data = int(data) + 1
-        counter_file.write(str(data))
-        counter_file.close()
+
+            mapper.generate_receipt(
+                id,
+                name,
+                date,
+                receipt,
+                voucher,
+                payment_method,
+                item,
+                payment_type,
+                receipt_index,
+                voucher_index,
+            )
 
 
 def view_ledger():

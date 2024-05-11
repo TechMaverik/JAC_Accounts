@@ -32,9 +32,10 @@ ledger_view_table_head = [
 ]
 cashbook_table = [
     "Date",
-    "Receipt",
+    "Receipt No",
     "Party Details",
     "Receipt (INR)",
+    "Voucher No",
     "Voucher (INR)",
 ]
 payment_type = ["cash", "cheque"]

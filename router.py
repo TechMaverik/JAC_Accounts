@@ -120,6 +120,7 @@ def view_ledger():
 def cashbook():
     dashboard = menus.dashboard_menus
     rows, receipt_amount, voucher_amount, balance = service.cashbook()
+    print(rows)
 
     return render_template(
         "cashbook.html",

@@ -100,14 +100,26 @@ def generate_receipt(
     payment_method,
     item,
     payment_type,
+    receipt_index,
+    voucher_index,
 ):
     with sqlite3.connect("jac_accounts.db") as conn:
         cur = conn.cursor()
         cur.execute(
             "INSERT into "
             + item
-            + "(id , name , date  , receipt_amount , voucher_amount , payment_method, payment_type ) Values(?,?,?,?,?,?,?)",
-            (R_id, name, date, receipt, voucher, payment_method, payment_type),
+            + "(id , name , date  , receipt_amount , voucher_amount , payment_method, payment_type, receipt_index , voucher_index ) Values(?,?,?,?,?,?,?,?,?)",
+            (
+                R_id,
+                name,
+                date,
+                receipt,
+                voucher,
+                payment_method,
+                payment_type,
+                receipt_index,
+                voucher_index,
+            ),
         )
         conn.commit()
     conn.close()
@@ -149,7 +161,8 @@ def cashbook(header):
     query = generate_cashbook_query(header)
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query + "WHERE receipt_amount AND voucher_amount == 0")
+        # + "WHERE receipt_amount AND voucher_amount != 0"
         rows = cursor.fetchall()
     conn.close()
     with sqlite3.connect("jac_accounts.db") as conn:
