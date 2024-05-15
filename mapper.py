@@ -92,33 +92,29 @@ def delete_ledgerhead(name):
 
 
 def generate_receipt(
-    R_id,
+    ID,
     name,
-    date,
-    receipt,
-    voucher,
-    payment_method,
-    item,
     payment_type,
-    receipt_index,
-    voucher_index,
+    payment_method,
+    ledger_head,
+    date,
+    amount,
+    dynamic_id,
 ):
     with sqlite3.connect("jac_accounts.db") as conn:
         cur = conn.cursor()
         cur.execute(
             "INSERT into "
-            + item
-            + "(id , name , date  , receipt_amount , voucher_amount , payment_method, payment_type, receipt_index , voucher_index ) Values(?,?,?,?,?,?,?,?,?)",
+            + ledger_head
+            + "(id , name , dynamic_id , amount , date , cash_cheque , payment_type ) Values(?,?,?,?,?,?,?)",
             (
-                R_id,
+                ID,
                 name,
+                dynamic_id,
+                amount,
                 date,
-                receipt,
-                voucher,
                 payment_method,
                 payment_type,
-                receipt_index,
-                voucher_index,
             ),
         )
         conn.commit()
@@ -134,11 +130,15 @@ def view_ledger(header):
 
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("Select SUM(receipt_amount) FROM " + header)
+        cursor.execute(
+            "Select SUM(amount) FROM " + header + " WHERE payment_type='Receipt'"
+        )
         receipt_sum = cursor.fetchall()
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("Select SUM(voucher_amount) FROM " + header)
+        cursor.execute(
+            "Select SUM(amount) FROM " + header + " WHERE payment_type='Voucher'"
+        )
         voucher_sum = cursor.fetchall()
     conn.close()
 
@@ -168,14 +168,22 @@ def cashbook(header):
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
         cursor.execute(
-            "Select SUM(receipt_amount) AS Total_Amount FROM " + "(" + query + ")"
+            "Select SUM(amount) AS Total_Amount FROM "
+            + "("
+            + query
+            + ")"
+            + "WHERE payment_type='Receipt'"
         )
         receipt_amount = cursor.fetchall()
     conn.close()
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
         cursor.execute(
-            "Select SUM(voucher_amount) AS Total_Amount FROM " + "(" + query + ")"
+            "Select SUM(amount) AS Total_Amount FROM "
+            + "("
+            + query
+            + ")"
+            + "WHERE payment_type='Voucher'"
         )
         voucher_amount = cursor.fetchall()
     conn.close()

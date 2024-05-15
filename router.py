@@ -70,6 +70,7 @@ def create_ledger():
 @app.route("/receipt", methods=["get", "post"])
 def receipt():
     ledger_header = mapper.view_ledger_head()
+    header = service.get_ledgerlist()
     service.generate_receipt()
     return render_template(
         "receipt.html",
@@ -77,6 +78,7 @@ def receipt():
         ledger_header=ledger_header,
         receipt_payment=menus.receipt_payment,
         payment_type=menus.payment_type,
+        header=header,
     )
 
 
@@ -97,6 +99,7 @@ def view_ledger():
 
     if request.method == "POST":
         ledger, receipt_sum, voucher_sum, head = service.view_ledger()
+        print(ledger)
         return render_template(
             "view_ledger.html",
             dashboard=dashboard,
@@ -119,8 +122,8 @@ def view_ledger():
 @app.route("/cashbook", methods=["get", "post"])
 def cashbook():
     dashboard = menus.dashboard_menus
-    rows, receipt_amount, voucher_amount, balance = service.cashbook()
-    print(rows)
+    rows, receipt_amount, voucher_amount = service.cashbook()
+    balance = receipt_amount[0][0] - voucher_amount[0][0]
 
     return render_template(
         "cashbook.html",
