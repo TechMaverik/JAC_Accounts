@@ -124,7 +124,10 @@ def cashbook():
     try:
         dashboard = menus.dashboard_menus
         rows, receipt_amount, voucher_amount = service.cashbook()
-        balance = receipt_amount[0][0] - voucher_amount[0][0]
+        try:
+            balance = receipt_amount[0][0] - voucher_amount[0][0]
+        except:
+            balance = 0
 
         return render_template(
             "cashbook.html",
