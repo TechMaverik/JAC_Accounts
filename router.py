@@ -144,5 +144,10 @@ def cashbook():
         return render_template("error.html", message=message, dashboard=dashboard)
 
 
+@app.route("/add_opening_balance", methods=["get", "post"])
+def opening_balance():
+    service.add_opening_balance()
+
+
 if __name__ == "__main__":
     app.run("localhost", 5000, debug=True)

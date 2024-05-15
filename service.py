@@ -81,6 +81,7 @@ def generate_receipt():
         ledger_head_list = get_ledgerlist()
         try:
             database.create_ledger_tables()
+            create_opening_balance()
         except:
             pass
         ID = random.randint(0, 1000)
@@ -135,3 +136,9 @@ def cashbook():
     headers = get_ledgerlist()
     rows, receipt_amount, voucher_amount = mapper.cashbook(header=headers)
     return (rows, receipt_amount, voucher_amount)
+
+
+def add_opening_balance():
+    if request.method == "POST":
+        amount = request.form.get("opening_balance")
+        mapper.add_opening_balance(amount)

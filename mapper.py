@@ -40,7 +40,7 @@ def view_members():
     try:
         database.create_members()
         database.create_ledger()
-        database.create_cashbook()
+        database.create_opening_balance()
     except:
         pass
     with sqlite3.connect("jac_accounts.db") as conn:
@@ -187,3 +187,11 @@ def cashbook(header):
         voucher_amount = cursor.fetchall()
     conn.close()
     return rows, receipt_amount, voucher_amount
+
+
+def add_opening_balance(amount):
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("Insert into OpeningBalance(amount) Values(?)", [amount])
+        conn.commit()
+    conn.close()

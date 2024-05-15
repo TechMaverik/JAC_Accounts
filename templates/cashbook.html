@@ -49,6 +49,14 @@
     <div class="col-sm-9">
       <h4><small>CASH BOOK</small></h4>
       <hr>
+      <form action="/add_opening_balance" method="post">
+      <div class="form-group">
+        <input type="number" class="form-control" name="opening_balance" aria-describedby="opening_balance" placeholder="opening balance">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
       <table class="table">
         <thead>
             <tr>
