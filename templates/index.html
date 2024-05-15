@@ -44,23 +44,7 @@
         {% for key in dashboard %}
         <li ><a href="{{dashboard[key]}}">{{key}}</a></li>
         {% endfor %}
-      </ul><br>
-      <div>
-        <form action="/search" method="post">
-          <div >
-            <input type="date" class="form-control" name="from" aria-describedby="from" placeholder="from">
-          </div>
-          <br>
-          <div >
-            <input type="date" class="form-control" name="to" aria-describedby="to" placeholder="to">
-          </div>
-          <div><br></div>
-          <div>
-            <input type="submit" class="btn btn-success" name="search" aria-describedby="search" value="Search">
-          </div>
-        </form>
-        
-      </div>
+      </ul><br>     
     </div>
 
     <div class="col-sm-9">
