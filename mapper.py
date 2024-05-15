@@ -1,6 +1,5 @@
 import sqlite3
 import database
-import service
 
 
 def add_members(model):
