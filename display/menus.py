@@ -21,20 +21,20 @@ dashboard_menus = {
 
 gender = ["-", "Male", "Female"]
 yes_no = ["-", "Yes", "No"]
-receipt_payment = ["Receipt", "Payment"]
+receipt_payment = ["Receipt", "Voucher"]
 ledger_list_table = ["#", "Ledger Head", "Action"]
 ledger_view_table_head = [
     "Date",
-    "Receipt No",
+    "No",
+    "Receipt/Voucher",
     "Party Details",
-    "Receipt (INR)",
-    "Voucher (INR)",
+    "Amount (INR)",
 ]
 cashbook_table = [
     "Date",
-    "Receipt",
+    "No",
+    "Receipt/Voucher",
     "Party Details",
-    "Receipt (INR)",
-    "Voucher (INR)",
+    "Amount(INR)",
 ]
-payment_type = ["cash", "cheque"]
+payment_type = ["Cash", "Cheque"]

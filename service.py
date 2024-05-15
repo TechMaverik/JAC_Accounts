@@ -72,45 +72,56 @@ def delete_ledgerhead():
 
 def generate_receipt():
     if request.method == "POST":
-        counter_file = open("static\cashbook_counter.txt", "r")
-        data = int(counter_file.read())
+        counter_file = open("static\\receipt_counter.txt", "r")
+        receipt_index = int(counter_file.read())
+        counter_file.close()
+        counter_file = open("static\\voucher_counter.txt", "r")
+        voucher_index = int(counter_file.read())
         counter_file.close()
         ledger_head_list = get_ledgerlist()
         try:
             database.create_ledger_tables()
         except:
             pass
+        ID = random.randint(0, 1000)
+        name = request.form.get("name")
+        payment_type = request.form.get("payment_type")
+        payment_method = request.form.get("payment_method")
+        ledger_head = request.form.get("ledger_head")
+        date = request.form.get("date")
+        amount = request.form.get("amount")
 
-        for item in ledger_head_list:
-            payment_type = request.form.get("payment_type")
-            if payment_type == "Receipt":
-                receipt = request.form.get(str(item))
-                voucher = 0
-            else:
-                receipt = 0
-                voucher = request.form.get(str(item))
-            name = request.form.get("name")
-            date = request.form.get("date")
-            payment_method = request.form.get("payment_method")
-            R_id = data
-            print(
-                R_id, name, date, receipt, voucher, payment_method, item, payment_type
-            )
-
+        if payment_type == "Receipt":
             mapper.generate_receipt(
-                R_id,
+                ID,
                 name,
-                date,
-                receipt,
-                voucher,
-                payment_method,
-                item,
                 payment_type,
+                payment_method,
+                ledger_head,
+                date,
+                amount,
+                receipt_index,
             )
-        counter_file = open("static\cashbook_counter.txt", "w")
-        data = int(data) + 1
-        counter_file.write(str(data))
-        counter_file.close()
+            counter_file = open("static\\receipt_counter.txt", "w")
+            data = int(receipt_index) + 1
+            counter_file.write(str(data))
+            counter_file.close()
+
+        elif payment_type == "Voucher":
+            mapper.generate_receipt(
+                ID,
+                name,
+                payment_type,
+                payment_method,
+                ledger_head,
+                date,
+                amount,
+                voucher_index,
+            )
+            counter_file = open("static\\voucher_counter.txt", "w")
+            data = int(voucher_index) + 1
+            counter_file.write(str(data))
+            counter_file.close()
 
 
 def view_ledger():
@@ -123,7 +134,4 @@ def view_ledger():
 def cashbook():
     headers = get_ledgerlist()
     rows, receipt_amount, voucher_amount = mapper.cashbook(header=headers)
-    rct = receipt_amount[0][0]
-    vchr = voucher_amount[0][0]
-    balance = rct - vchr
-    return rows, receipt_amount, voucher_amount, balance
+    return (rows, receipt_amount, voucher_amount)

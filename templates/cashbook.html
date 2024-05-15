@@ -59,13 +59,23 @@
           </thead>
           {% for data in rows%}
           <tbody>
+            {%if data[6]=="Voucher"%}
             <tr>
-              <td>{{data[2]}}</td>
-              <td>{{data[0]}}</td>
-              <td>{{data[1]}}</td>
-              <td>{{data[3]}}</td>
-              <td>{{data[4]}}</td>
+              <td style="color: red;">{{data[4]}}</td>
+              <td style="color: red;">{{data[2]}}</td>
+              <td style="color: red;">{{data[6]}}</td>
+              <td style="color: red;">{{data[1]}}</td>
+              <td style="color: red;">{{data[3]}}</td>
             </tr>
+            {%else%}
+            <tr>
+              <td style="color: green;">{{data[4]}}</td>
+              <td style="color: green;">{{data[2]}}</td>
+              <td style="color: green;">{{data[6]}}</td>
+              <td style="color: green;">{{data[1]}}</td>
+              <td style="color: green;">{{data[3]}}</td>
+            </tr>
+            {%endif%}
           </tbody>
           {%endfor%}
       </table>
@@ -80,7 +90,7 @@
       <h3 style="color: red;">Total Voucher Amount: {{voucher_amount[0][0]}} INR </h3> 
       {%endfor%}    
       {%endif%} 
-      <h3 style="color: green;">Balance: {{balance}}</h3>
+      <h3 style="color: green;">Balance: {{balance}} INR</h3>
       
     </div>
       <br><br>
