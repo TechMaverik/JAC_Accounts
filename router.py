@@ -121,19 +121,24 @@ def view_ledger():
 
 @app.route("/cashbook", methods=["get", "post"])
 def cashbook():
-    dashboard = menus.dashboard_menus
-    rows, receipt_amount, voucher_amount = service.cashbook()
-    balance = receipt_amount[0][0] - voucher_amount[0][0]
+    try:
+        dashboard = menus.dashboard_menus
+        rows, receipt_amount, voucher_amount = service.cashbook()
+        balance = receipt_amount[0][0] - voucher_amount[0][0]
 
-    return render_template(
-        "cashbook.html",
-        dashboard=dashboard,
-        cash_table=menus.cashbook_table,
-        rows=rows,
-        receipt_amount=receipt_amount,
-        voucher_amount=voucher_amount,
-        balance=balance,
-    )
+        return render_template(
+            "cashbook.html",
+            dashboard=dashboard,
+            cash_table=menus.cashbook_table,
+            rows=rows,
+            receipt_amount=receipt_amount,
+            voucher_amount=voucher_amount,
+            balance=balance,
+        )
+    except:
+        dashboard = menus.dashboard_menus
+        message = "NO LEDGERS FOUND TO DISPLAY CASHBOOK"
+        return render_template("error.html", message=message, dashboard=dashboard)
 
 
 if __name__ == "__main__":
