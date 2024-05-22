@@ -142,3 +142,26 @@ def add_opening_balance():
     if request.method == "POST":
         amount = request.form.get("opening_balance")
         mapper.add_opening_balance(amount)
+
+
+def income_expense():
+    headers = get_ledgerlist()
+    income_row, expense_row, receipt_total, voucher_total = mapper.income_expense(
+        headers
+    )
+    balance = receipt_total[0][0] - voucher_total[0][0]
+    if balance < 0:
+        comment = "Expenditure over Income"
+        color = "red"
+    else:
+        comment = "Income over Expenditure"
+        color = "blueviolet"
+    return (
+        income_row,
+        expense_row,
+        receipt_total,
+        voucher_total,
+        comment,
+        balance,
+        color,
+    )

@@ -195,3 +195,68 @@ def add_opening_balance(amount):
         cursor.execute("Insert into OpeningBalance(amount) Values(?)", [amount])
         conn.commit()
     conn.close()
+
+
+def generate_income_expense_query(headers_list, receipt_payment):
+    UNION = " UNION "
+    SELECT_QUERY = "SELECT * FROM "
+    queryList = []
+    for head in headers_list:
+        query = (
+            SELECT_QUERY
+            + head
+            + " WHERE payment_type='"
+            + receipt_payment
+            + "'"
+            + UNION
+        )
+        queryList.append(query)
+    listToStr = " ".join([str(elem) for elem in queryList])
+    query = listToStr[: listToStr.rfind("UNION")]
+    return query
+
+
+def income_expense(headers):
+    query = generate_income_expense_query(headers, "Receipt")
+    print(query)
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute((query))
+        income_row = cursor.fetchall()
+
+    conn.close()
+    query = generate_income_expense_query(headers, "Voucher")
+    print(query)
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute(query)
+        expense_row = cursor.fetchall()
+    conn.close()
+
+    with sqlite3.connect("jac_accounts.db") as conn:
+        query = generate_cashbook_query(headers)
+        cursor = conn.cursor()
+        cursor.execute(
+            "Select SUM(amount) AS Total_Amount FROM "
+            + "("
+            + query
+            + ")"
+            + "WHERE payment_type='Receipt'"
+        )
+        receipt_total = cursor.fetchall()
+
+    with sqlite3.connect("jac_accounts.db") as conn:
+        query = generate_cashbook_query(headers)
+        cursor = conn.cursor()
+        cursor.execute(
+            "Select SUM(amount) AS Total_Amount FROM "
+            + "("
+            + query
+            + ")"
+            + "WHERE payment_type='Voucher'"
+        )
+        voucher_total = cursor.fetchall()
+
+    conn.close()
+
+    return (income_row, expense_row, receipt_total, voucher_total)

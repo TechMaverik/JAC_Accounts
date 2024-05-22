@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JAC accounts</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 1500px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <img src="static/JAC_AI.png" alt="JAC Accounts"  class="img-thumbnail"/>
+      <ul class="nav nav-pills nav-stacked">
+        {% for key in dashboard %}
+        <li ><a href="{{dashboard[key]}}">{{key}}</a></li>
+        {% endfor %}
+      </ul><br>      
+    </div>
+    <div class="col-sm-9">
+      <h4><small>INCOME</small></h4>
+      <hr>
+      
+      <table class="table">
+        <thead>
+            <tr>
+              {% for table in expenses_tables%}
+              <th scope="col">{{table}}</th>
+              {%endfor%}
+            </tr>
+          </thead>
+          {% for data in incomes%}
+          <tbody>
+            
+            <tr>
+              <td style="color: green;">{{data[4]}}</td>
+              <td style="color: green;">{{data[2]}}</td>
+              <td style="color: green;">{{data[6]}}</td>
+              <td style="color: green;">{{data[1]}}</td>
+              <td style="color: green;">{{data[3]}}</td>
+            </tr>
+    
+          </tbody>
+          {%endfor%}
+      </table>
+      <b>Receipt Total: {{receipt_total[0][0]}}</b>
+      <h4><small>EXPENDITURE</small></h4>
+      <hr>
+      
+      <table class="table">
+        <thead>
+            <tr>
+              {% for table in expenses_tables%}
+              <th scope="col">{{table}}</th>
+              {%endfor%}
+            </tr>
+          </thead>
+          {% for data in expenses%}
+          <tbody>
+            
+            <tr>
+              <td style="color: red;">{{data[4]}}</td>
+              <td style="color: red;">{{data[2]}}</td>
+              <td style="color: red;">{{data[6]}}</td>
+              <td style="color: red;">{{data[1]}}</td>
+              <td style="color: red;">{{data[3]}}</td>
+            </tr>
+    
+          </tbody>
+          {%endfor%}
+      </table>
+      <b>Voucher Total: {{voucher_total[0][0]}}</b>
+      {%if colors=="red"%}
+      <h2 style="color: red;">{{comment}} : {{balance}} INR</h2>
+      {%endif%}
+      {%if colors=="blueviolet"%}
+      <h2 style="color: blueviolet;">{{comment}} : {{balance}} INR</h2>
+      {%endif%}
+    </div>
+      <br><br>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

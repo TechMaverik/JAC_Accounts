@@ -11,11 +11,12 @@ add_members_menu = [
 ]
 
 dashboard_menus = {
-    "ActiveMembers": "/",
-    "AddMembers": "/add_members",
-    "CreateLedger": "/create_ledger",
-    "ViewLedger": "/view_ledger",
-    "CashBook": "/cashbook",
+    "Active Members": "/",
+    "Add Members": "/add_members",
+    "Create Ledger": "/create_ledger",
+    "View Ledger": "/view_ledger",
+    "Cash Book": "/cashbook",
+    "Income and Expense": "/income_expense",
     "Settings": "",
 }
 
@@ -38,3 +39,10 @@ cashbook_table = [
     "Amount(INR)",
 ]
 payment_type = ["Cash", "Cheque"]
+income_table = [
+    "Date",
+    "No",
+    "Receipt",
+    "Party Details",
+    "Amount(INR)",
+]
