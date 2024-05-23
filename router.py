@@ -144,5 +144,38 @@ def cashbook():
         return render_template("error.html", message=message, dashboard=dashboard)
 
 
+@app.route("/add_opening_balance", methods=["get", "post"])
+def opening_balance():
+    service.add_opening_balance()
+
+
+@app.route("/income_expense", methods=["get", "post"])
+def income_expense():
+    expenses_tables = menus.income_table
+    try:
+        incomes, expenses, receipt_total, voucher_total, comment, balance, colors = (
+            service.income_expense()
+        )
+
+        dashboard = menus.dashboard_menus
+
+        return render_template(
+            "income_and_expense.html",
+            expenses_tables=expenses_tables,
+            expenses=expenses,
+            incomes=incomes,
+            dashboard=dashboard,
+            receipt_total=receipt_total,
+            voucher_total=voucher_total,
+            comment=comment,
+            balance=balance,
+            colors=colors,
+        )
+    except:
+        dashboard = menus.dashboard_menus
+        message = "NO LEDGER DATA FOUND TO DISPLAY INCOME AND EXPENDITURE"
+        return render_template("error.html", message=message, dashboard=dashboard)
+
+
 if __name__ == "__main__":
     app.run("localhost", 5000, debug=True)
