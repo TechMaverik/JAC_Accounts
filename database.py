@@ -43,6 +43,6 @@ def create_ledger_tables():
 
 def create_opening_balance():
     con = sqlite3.connect("jac_accounts.db")
-    con.execute("Create table OpeningBalance(amount VARCHAR DEFAULT 0 NOT NULL)")
+    con.execute("Create table OpeningBalance(id VARCHAR, amount VARCHAR)")
     con.close()
     logging.info(msg="Ledger Table Created")

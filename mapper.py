@@ -1,6 +1,14 @@
 import sqlite3
 import database
 
+try:
+    database.create_members()
+    database.create_ledger()
+
+
+except:
+    pass
+
 
 def add_members(model):
     counter_file = open("static/counter.txt", "r")
@@ -37,12 +45,6 @@ def add_members(model):
 
 
 def view_members():
-    try:
-        database.create_members()
-        database.create_ledger()
-        database.create_opening_balance()
-    except:
-        pass
     with sqlite3.connect("jac_accounts.db") as conn:
         cur = conn.cursor()
         cur.execute("SELECT * from Members")
@@ -157,6 +159,7 @@ def generate_cashbook_query(x):
         queryList.append(query)
     listToStr = " ".join([str(elem) for elem in queryList])
     query = listToStr[: listToStr.rfind("UNION")]
+    # query = query + " OpeningBalance"
     return query
 
 
@@ -193,12 +196,28 @@ def cashbook(header):
     return rows, receipt_amount, voucher_amount
 
 
-def add_opening_balance(amount):
+def add_opening_balance(id, amount):
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("Insert into OpeningBalance(amount) Values(?)", [amount])
+        cursor.execute(
+            "Insert into OpeningBalance(id,amount) Values(?,?)",
+            (
+                id,
+                amount,
+            ),
+        )
         conn.commit()
     conn.close()
+
+
+def get_opening_balance():
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM OpeningBalance")
+        rows = cursor.fetchall()
+    conn.commit()
+    conn.close()
+    return rows
 
 
 def generate_income_expense_query(headers_list, receipt_payment):

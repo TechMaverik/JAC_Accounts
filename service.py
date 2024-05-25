@@ -129,14 +129,16 @@ def view_ledger():
 
 def cashbook():
     headers = get_ledgerlist()
+    opening_balance = mapper.get_opening_balance()
     rows, receipt_amount, voucher_amount = mapper.cashbook(header=headers)
-    return (rows, receipt_amount, voucher_amount)
+    return (rows, receipt_amount, voucher_amount, opening_balance)
 
 
 def add_opening_balance():
     if request.method == "POST":
+        id = random.randint(0, 2)
         amount = request.form.get("opening_balance")
-        mapper.add_opening_balance(amount)
+        mapper.add_opening_balance(id, amount)
 
 
 def income_expense():
