@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from display import menus
-import mapper
-import service
+import mapper, service, settings
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secretkey"
@@ -175,6 +174,24 @@ def income_expense():
         dashboard = menus.dashboard_menus
         message = "NO LEDGER DATA FOUND TO DISPLAY INCOME AND EXPENDITURE"
         return render_template("error.html", message=message, dashboard=dashboard)
+
+
+@app.route("/settings", methods=["get", "post"])
+def settings_page():
+    return render_template(
+        "settings.html",
+        dashboard=menus.dashboard_menus,
+    )
+
+
+@app.route("/erase_all_data", methods=["get", "post"])
+def erase_all_data():
+    status = settings.erase_all_data()
+    return render_template(
+        "index.html",
+        dashboard=menus.dashboard_menus,
+        status=status,
+    )
 
 
 if __name__ == "__main__":

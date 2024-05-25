@@ -17,7 +17,7 @@ dashboard_menus = {
     "View Ledger": "/view_ledger",
     "Cash Book": "/cashbook",
     "Income and Expense": "/income_expense",
-    "Settings": "",
+    "Settings": "/settings",
 }
 
 gender = ["-", "Male", "Female"]

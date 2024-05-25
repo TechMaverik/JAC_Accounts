@@ -39,7 +39,7 @@ def create_ledger():
             id=lh_id,
             name=request.form["head"],
         )
-        with open("static\ledger.txt", "a") as file:
+        with open("static/ledger.txt", "a") as file:
             file.writelines(str(request.form["head"]))
             file.write("\n")
             file.close()
@@ -48,7 +48,7 @@ def create_ledger():
 
 def get_ledgerlist():
     clean_ledger_list = []
-    with open("static\ledger.txt", "r") as file:
+    with open("static/ledger.txt", "r") as file:
         ledger_list = file.readlines()
         file.close()
     for unclean_data in ledger_list:
@@ -62,7 +62,7 @@ def delete_ledgerhead():
         name = request.form.get("name")
         ledgerList = get_ledgerlist()
 
-        with open("static\ledger.txt", "w") as file:
+        with open("static/ledger.txt", "w") as file:
             ledgerList.remove(name)
             for data in ledgerList:
                 file.writelines(str(data) + "\n")
@@ -72,18 +72,13 @@ def delete_ledgerhead():
 
 def generate_receipt():
     if request.method == "POST":
-        counter_file = open("static\\receipt_counter.txt", "r")
+        counter_file = open("static/receipt_counter.txt", "r")
         receipt_index = int(counter_file.read())
         counter_file.close()
-        counter_file = open("static\\voucher_counter.txt", "r")
+        counter_file = open("static/voucher_counter.txt", "r")
         voucher_index = int(counter_file.read())
         counter_file.close()
-        ledger_head_list = get_ledgerlist()
-        try:
-            database.create_ledger_tables()
-            create_opening_balance()
-        except:
-            pass
+
         ID = random.randint(0, 1000)
         name = request.form.get("name")
         payment_type = request.form.get("payment_type")
@@ -103,7 +98,7 @@ def generate_receipt():
                 amount,
                 receipt_index,
             )
-            counter_file = open("static\\receipt_counter.txt", "w")
+            counter_file = open("static/receipt_counter.txt", "w")
             data = int(receipt_index) + 1
             counter_file.write(str(data))
             counter_file.close()
@@ -119,7 +114,7 @@ def generate_receipt():
                 amount,
                 voucher_index,
             )
-            counter_file = open("static\\voucher_counter.txt", "w")
+            counter_file = open("static/voucher_counter.txt", "w")
             data = int(voucher_index) + 1
             counter_file.write(str(data))
             counter_file.close()

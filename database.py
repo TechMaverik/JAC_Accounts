@@ -26,14 +26,19 @@ def create_ledger():
 def create_ledger_tables():
     ledger_header_list = service.get_ledgerlist()
     con = sqlite3.connect("jac_accounts.db")
+
     for head in ledger_header_list:
-        con.execute(
-            "Create table "
-            + head
-            + "(id VARCHAR, name VARCHAR, dynamic_id VARCHAR, amount VARCHAR, date VARCHAR, cash_cheque VARCHAR, payment_type VARCHAR)"
-        )
-        logging.info(msg=head + " Table Created")
-    con.close()
+        try:
+            con.execute(
+                "Create table "
+                + head
+                + "(id VARCHAR, name VARCHAR, dynamic_id VARCHAR, amount VARCHAR, date VARCHAR, cash_cheque VARCHAR, payment_type VARCHAR)"
+            )
+            logging.info(msg=head + " Table Created")
+            con.close()
+            print("Created custom ledger head table in DB --->" + head)
+        except:
+            print("Cant create custom ledger head tables in DB ---> " + head)
 
 
 def create_opening_balance():

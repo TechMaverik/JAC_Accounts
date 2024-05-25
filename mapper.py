@@ -3,7 +3,7 @@ import database
 
 
 def add_members(model):
-    counter_file = open("static\counter.txt", "r")
+    counter_file = open("static/counter.txt", "r")
     data = int(counter_file.read())
     counter_file.close()
 
@@ -28,7 +28,7 @@ def add_members(model):
             ),
         )
         conn.commit()
-        counter_file = open("static\counter.txt", "w")
+        counter_file = open("static/counter.txt", "w")
         data = int(data) + 1
         counter_file.write(str(data))
         counter_file.close()
@@ -71,6 +71,10 @@ def create_ledger(model):
         )
         conn.commit()
     conn.close()
+    try:
+        database.create_ledger_tables()
+    except:
+        print("Cant create tables")
 
 
 def view_ledger_head():

@@ -44,58 +44,19 @@
         {% for key in dashboard %}
         <li ><a href="{{dashboard[key]}}">{{key}}</a></li>
         {% endfor %}
-      </ul><br>
-      <div>
-        <form action="/search" method="post">
-          <div >
-            <input type="text" class="form-control" name="name" aria-describedby="name" placeholder="Name">
-          </div>
-          <br>
-          <div><br></div>
-          <div >
-            <input type="submit" class="btn btn-success" name="search" aria-describedby="search" value="Search">
-          </div>
-        </form>
-        
-      </div>
+      </ul><br>      
     </div>
-
     <div class="col-sm-9">
-      <h4><small>MEMBERS</small></h4>
+      <h4><small>SETTINGS</small></h4>
       <hr>
-     {% if status %}
-     <div class="alert alert-danger" role="alert">
-      Purged all table entries
-      {% endif %}     
-      
-      <form action="/delete" method="post">
-      <table class="table">
-        <thead>
-          <tr>
-            {% for table in member_tab%}
-            <th scope="col">{{table}}</th>
-            {%endfor%}
-          </tr>
-        </thead>
-        <tbody>
-          {%for row in rows%}
-          <tr>            
-            <td>{{row[0]}}</td>   
-            <td>{{row[1]}}</td>
-            <td>{{row[2]}}</td>        
-            <td>{{row[4]}}</td>
-            <td>{{row[7]}}</td>
-            <td>{{row[6]}}</td>
-            <td>{{row[12]}}</td>
-            <td>
-              <a href="{{'/delete'}}"><input type="button" class="btn btn-danger" name="delete" aria-describedby="delete" value="delete"></a>              
-            </td>
-          </tr>
-          {%endfor%}
-        </tbody>
+      <br>
     
-      </table>
-    </form>
+      <form action="erase_all_data", method="post">
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger">Erase All Data</button>
+        </div>
+      </form>
+      
     </div>
       <br><br>
     </div>
