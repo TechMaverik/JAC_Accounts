@@ -167,7 +167,7 @@ def cashbook(header):
     query = generate_cashbook_query(header)
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query + " ORDER BY date DESC")
         # + "WHERE receipt_amount AND voucher_amount != 0"
         rows = cursor.fetchall()
     conn.close()
@@ -244,7 +244,7 @@ def income_expense(headers):
     print(query)
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute((query))
+        cursor.execute(query + " ORDER BY date DESC")
         income_row = cursor.fetchall()
 
     conn.close()
@@ -252,7 +252,7 @@ def income_expense(headers):
     print(query)
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query + " ORDER BY date DESC")
         expense_row = cursor.fetchall()
     conn.close()
 

@@ -120,45 +120,52 @@ def view_ledger():
 
 @app.route("/cashbook", methods=["get", "post"])
 def cashbook():
+    try:
 
-    dashboard = menus.dashboard_menus
-    rows, receipt_amount, voucher_amount, opening_balance = service.cashbook()
-    try:
-        opening_balance_data = int(opening_balance[0][1])
-    except:
-        opening_balance_data = 0
-    try:
-        receipt_amount_data = int(receipt_amount[0][0])
-    except:
-        receipt_amount_data = 0
-    try:
-        voucher_amount_data = int(voucher_amount[0][0])
-    except:
-        voucher_amount_data = 0
+        dashboard = menus.dashboard_menus
+        rows, receipt_amount, voucher_amount, opening_balance = service.cashbook()
+        try:
+            opening_balance_data = int(opening_balance[0][1])
+        except:
+            opening_balance_data = 0
+        try:
+            receipt_amount_data = int(receipt_amount[0][0])
+        except:
+            receipt_amount_data = 0
+        try:
+            voucher_amount_data = int(voucher_amount[0][0])
+        except:
+            voucher_amount_data = 0
 
-    try:
-        balance = (opening_balance_data + receipt_amount_data) - voucher_amount_data
-    except:
-        balance = 0
+        try:
+            balance = (opening_balance_data + receipt_amount_data) - voucher_amount_data
+        except:
+            balance = 0
 
-    return render_template(
-        "cashbook.html",
-        dashboard=dashboard,
-        cash_table=menus.cashbook_table,
-        rows=rows,
-        receipt_amount=receipt_amount,
-        voucher_amount=voucher_amount,
-        balance=balance,
-    )
+        return render_template(
+            "cashbook.html",
+            dashboard=dashboard,
+            cash_table=menus.cashbook_table,
+            rows=rows,
+            receipt_amount=receipt_amount,
+            voucher_amount=voucher_amount,
+            balance=balance,
+            opening_balance_data=opening_balance_data,
+        )
+    except:
+        return render_template(
+            "error.html",
+            message="No Processed Data to display",
+            dashboard=menus.dashboard_menus,
+        )
 
 
 @app.route("/add_opening_balance", methods=["get", "post"])
 def add_opening_balance():
     service.add_opening_balance()
-    return render_template(
-        "index.html",
-        dashboard=menus.dashboard_menus,
-    )
+    dashboard = menus.dashboard_menus
+    message = "Successfully Added Opening Cash"
+    return render_template("error.html", message=message, dashboard=dashboard)
 
 
 @app.route("/income_expense", methods=["get", "post"])
