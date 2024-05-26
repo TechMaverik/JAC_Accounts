@@ -56,6 +56,7 @@ def delete_member():
 @app.route("/create_ledger", methods=["get", "post"])
 def create_ledger():
     service.create_ledger()
+    company = mapper.get_company_details()
     rows = mapper.view_ledger_head()
     return render_template(
         "create_ledger.html",
@@ -63,6 +64,7 @@ def create_ledger():
         payment_type=menus.receipt_payment,
         ledger_list_table=menus.ledger_list_table,
         rows=rows,
+        company=company,
     )
 
 
@@ -211,6 +213,18 @@ def erase_all_data():
         "index.html",
         dashboard=menus.dashboard_menus,
         status=status,
+    )
+
+
+@app.route("/create_company", methods=["get", "post"])
+def create_company():
+    service.create_company()
+    company_details = mapper.get_company_details()
+    return render_template(
+        "create_company.html",
+        dashboard=menus.dashboard_menus,
+        company_tables=menus.company_details,
+        company_details=company_details,
     )
 
 

@@ -9,6 +9,7 @@ def erase_all_data():
         "Members",
         "LedgerHeads",
         "OpeningBalance",
+        "Company",
     ]
 
     ledger_cache_path = "static/ledger.txt"
@@ -50,5 +51,6 @@ def erase_all_data():
     conn.close()
     database.create_members()
     database.create_ledger()
+    database.create_company()
     database.create_opening_balance()
     return True

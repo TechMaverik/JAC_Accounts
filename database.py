@@ -18,7 +18,7 @@ def create_members():
 
 def create_ledger():
     con = sqlite3.connect("jac_accounts.db")
-    con.execute("Create table LedgerHeads(id VARCHAR, name VARCHAR)")
+    con.execute("Create table LedgerHeads(id VARCHAR, name VARCHAR , company VARCHAR)")
     con.close()
     logging.info(msg="Ledger Table Created")
 
@@ -46,3 +46,12 @@ def create_opening_balance():
     con.execute("Create table OpeningBalance(id VARCHAR, amount VARCHAR)")
     con.close()
     logging.info(msg="Ledger Table Created")
+
+
+def create_company():
+    con = sqlite3.connect("jac_accounts.db")
+    con.execute(
+        "Create table Company(id VARCHAR, company VARCHAR, gst VARCHAR, address VARCHAR)"
+    )
+    con.close()
+    logging.info(msg="Company Table Created")

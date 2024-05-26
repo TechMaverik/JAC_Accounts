@@ -11,8 +11,9 @@ add_members_menu = [
 ]
 
 dashboard_menus = {
-    "Active Members": "/",
+    "Directory": "/",
     "Add Members": "/add_members",
+    "Create Company": "/create_company",
     "Create Ledger": "/create_ledger",
     "View Ledger": "/view_ledger",
     "Cash Book": "/cashbook",
@@ -23,7 +24,7 @@ dashboard_menus = {
 gender = ["-", "Male", "Female"]
 yes_no = ["-", "Yes", "No"]
 receipt_payment = ["Receipt", "Voucher"]
-ledger_list_table = ["#", "Ledger Head", "Action"]
+ledger_list_table = ["#", "Ledger Head", "Company Name", "Action"]
 ledger_view_table_head = [
     "Date",
     "No",
@@ -45,4 +46,10 @@ income_table = [
     "Receipt",
     "Party Details",
     "Amount(INR)",
+]
+company_details = [
+    "ID",
+    "Company Name",
+    "GST",
+    "Address",
 ]
