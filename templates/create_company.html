@@ -52,7 +52,7 @@
       <br>
       <form action="create_company" method="post">
                       
-        {%if company_details is defined %}
+        {%if company_details =="" %}
         <div class="form-group">
             <input type="text" class="form-control" name="name" aria-describedby="name" placeholder="Company Name">
           </div> 
