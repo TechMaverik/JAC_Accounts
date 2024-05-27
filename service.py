@@ -3,7 +3,6 @@ from models.add_members import AddMembers
 from models.ledger import LedgerHead
 import mapper
 import random
-import database
 
 
 def add_members():
@@ -36,8 +35,7 @@ def create_ledger():
     if request.method == "POST":
         lh_id = "LH" + str(random.randint(1, 100))
         ledgerHead = LedgerHead(
-            id=lh_id,
-            name=request.form["head"],
+            id=lh_id, name=request.form["head"], company=request.form["company"]
         )
         with open("static/ledger.txt", "a") as file:
             file.writelines(str(request.form["head"]))
@@ -162,3 +160,13 @@ def income_expense():
         balance,
         color,
     )
+
+
+def create_company():
+    if request.method == "POST":
+        id = random.randint(1, 10)
+        company = request.form["name"]
+        gst = request.form["gst"]
+        address = request.form["address"]
+        status = mapper.create_company(id, company, gst, address)
+        return status

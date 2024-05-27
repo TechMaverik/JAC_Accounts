@@ -7,6 +7,14 @@ app.config["SECRET_KEY"] = "secretkey"
 
 
 @app.route("/", methods=["get", "post"])
+def welcome():
+    return render_template(
+        "welcome.html",
+        dashboard=menus.dashboard_menus,
+    )
+
+
+@app.route("/directory", methods=["get", "post"])
 def index():
     dashboard = menus.dashboard_menus
     member_tab = menus.add_members_menu
@@ -56,6 +64,7 @@ def delete_member():
 @app.route("/create_ledger", methods=["get", "post"])
 def create_ledger():
     service.create_ledger()
+    company = mapper.get_company_details()
     rows = mapper.view_ledger_head()
     return render_template(
         "create_ledger.html",
@@ -63,6 +72,7 @@ def create_ledger():
         payment_type=menus.receipt_payment,
         ledger_list_table=menus.ledger_list_table,
         rows=rows,
+        company=company,
     )
 
 
@@ -155,7 +165,7 @@ def cashbook():
     except:
         return render_template(
             "error.html",
-            message="No Processed Data to display",
+            message="No Processed Cashbook Data to Display",
             dashboard=menus.dashboard_menus,
         )
 
@@ -192,7 +202,7 @@ def income_expense():
         )
     except:
         dashboard = menus.dashboard_menus
-        message = "NO LEDGER DATA FOUND TO DISPLAY INCOME AND EXPENDITURE"
+        message = "No Ledger data found to display Income and Expenditure"
         return render_template("error.html", message=message, dashboard=dashboard)
 
 
@@ -208,9 +218,25 @@ def settings_page():
 def erase_all_data():
     status = settings.erase_all_data()
     return render_template(
-        "index.html",
+        "welcome.html",
         dashboard=menus.dashboard_menus,
         status=status,
+    )
+
+
+@app.route("/create_company", methods=["get", "post"])
+def create_company():
+    service.create_company()
+    company_details = mapper.get_company_details()
+    try:
+        x = company_details[0][0]
+    except:
+        company_details = ""
+    return render_template(
+        "create_company.html",
+        dashboard=menus.dashboard_menus,
+        company_tables=menus.company_details,
+        company_details=company_details,
     )
 
 

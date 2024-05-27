@@ -3,9 +3,18 @@ import database
 
 try:
     database.create_members()
+except:
+    pass
+try:
     database.create_ledger()
-
-
+except:
+    pass
+try:
+    database.create_company()
+except:
+    pass
+try:
+    database.create_opening_balance()
 except:
     pass
 
@@ -65,10 +74,11 @@ def create_ledger(model):
     with sqlite3.connect("jac_accounts.db") as conn:
         cur = conn.cursor()
         cur.execute(
-            "INSERT into LedgerHeads(id,name)Values(?,?)",
+            "INSERT into LedgerHeads(id,name,company)Values(?,?,?)",
             (
                 model.id,
                 model.name,
+                model.company,
             ),
         )
         conn.commit()
@@ -283,3 +293,29 @@ def income_expense(headers):
     conn.close()
 
     return (income_row, expense_row, receipt_total, voucher_total)
+
+
+def create_company(id, name, gst, address):
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT into Company(id , company , gst , address ) VALUES(?,?,?,?)",
+            (
+                id,
+                name,
+                gst,
+                address,
+            ),
+        )
+        conn.commit()
+    conn.close()
+    return True
+
+
+def get_company_details():
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Company")
+        rows = cursor.fetchall()
+    conn.close()
+    return rows

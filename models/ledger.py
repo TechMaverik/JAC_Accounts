@@ -6,6 +6,7 @@ class LedgerHead(BaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
     type: Optional[str] = None
+    company: Optional[str] = None
 
 
 class Receipt(BaseModel):
