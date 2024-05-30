@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
+from flask_session import Session
 from display import menus
 import mapper, service, settings
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secretkey"
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 
 @app.route("/", methods=["get", "post"])

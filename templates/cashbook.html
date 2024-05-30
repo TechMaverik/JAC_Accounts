@@ -80,11 +80,11 @@
           </thead>
           {% for data in rows%}
           <tbody>
-            {%if data[6]=="Voucher"%}
+            {%if data[6]=="Expense"%}
             <tr>
               <td style="color: red;">{{data[4]}}</td>
               <td style="color: red;">{{data[2]}}</td>
-              <td style="color: red;">{{data[6]}}</td>
+              <td style="color: red;">{{data[7]}}</td>
               <td style="color: red;">{{data[1]}}</td>
               <td style="color: red;">{{data[3]}}</td>
             </tr>
@@ -92,7 +92,7 @@
             <tr>
               <td style="color: green;">{{data[4]}}</td>
               <td style="color: green;">{{data[2]}}</td>
-              <td style="color: green;">{{data[6]}}</td>
+              <td style="color: green;">{{data[7]}}</td>
               <td style="color: green;">{{data[1]}}</td>
               <td style="color: green;">{{data[3]}}</td>
             </tr>
@@ -102,16 +102,16 @@
       </table>
       {%if receipt_amount!=None%} 
       {%for amt in receipt_amount %}
-      <h3 style="color: green;">Total Receipt Amount: {{receipt_amount[0][0]}} INR </h3> 
+      <h3 style="color: green;">Total Income Amount: {{receipt_amount[0][0]}}   ₹ </h3> 
       {%endfor%}    
       {%endif%} 
 
       {%if voucher_amount!=None%} 
       {%for amt in voucher_amount %}
-      <h3 style="color: red;">Total Voucher Amount: {{voucher_amount[0][0]}} INR </h3> 
+      <h3 style="color: red;">Total Expense Amount: {{voucher_amount[0][0]}}   ₹ </h3> 
       {%endfor%}    
       {%endif%} 
-      <h3 style="color: green;">Balance: {{balance}} INR</h3>
+      <h3 style="color: green;">Balance: {{balance}}   ₹</h3>
       
     </div>
       <br><br>

@@ -24,29 +24,31 @@ dashboard_menus = {
 
 gender = ["-", "Male", "Female"]
 yes_no = ["-", "Yes", "No"]
-receipt_payment = ["Receipt", "Voucher"]
+receipt_payment = ["-","Income", "Expense", "Credit Balance", "Debit Balance"]
 ledger_list_table = ["#", "Ledger Head", "Company Name", "Action"]
 ledger_view_table_head = [
     "Date",
     "No",
-    "Receipt/Voucher",
+    "Head",
     "Party Details",
-    "Amount (INR)",
+    "Amount (₹)",
+    "Action"
 ]
 cashbook_table = [
     "Date",
     "No",
-    "Receipt/Voucher",
+    "Ledger Head",
     "Party Details",
-    "Amount(INR)",
+    "Amount(₹)",
 ]
-payment_type = ["Cash", "Cheque"]
+payment_type = ["-","Cash", "Cheque"]
+amount_types=["-","Credit Account","Debit Account"]
 income_table = [
     "Date",
     "No",
-    "Receipt",
+    "Head",
     "Party Details",
-    "Amount(INR)",
+    "Amount(₹)",
 ]
 company_details = [
     "ID",
