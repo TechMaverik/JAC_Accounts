@@ -12,8 +12,8 @@ add_members_menu = [
 
 dashboard_menus = {
     "Notifications ": "/",
-    "Directory": "/directory",
-    "Add Members": "/add_members",
+    # "Directory": "/directory",
+    # "Add Members": "/add_members",
     "Create Company": "/create_company",
     "Create Ledger": "/create_ledger",
     "View Ledger": "/view_ledger",
