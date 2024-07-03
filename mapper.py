@@ -121,7 +121,7 @@ def generate_receipt(
         cur.execute(
             "INSERT into "
             + ledger_head
-            + "(id , name , dynamic_id , amount , date , cash_cheque , payment_type ) Values(?,?,?,?,?,?,?)",
+            + "(id , name , dynamic_id , amount , date , cash_cheque , payment_type, header ) Values(?,?,?,?,?,?,?,?)",
             (
                 ID,
                 name,
@@ -130,6 +130,7 @@ def generate_receipt(
                 date,
                 payment_method,
                 payment_type,
+                ledger_head,
             ),
         )
         conn.commit()
@@ -146,13 +147,13 @@ def view_ledger(header):
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
         cursor.execute(
-            "Select SUM(amount) FROM " + header + " WHERE payment_type='Receipt'"
+            "Select SUM(amount) FROM " + header + " WHERE payment_type='Income'"
         )
         receipt_sum = cursor.fetchall()
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
         cursor.execute(
-            "Select SUM(amount) FROM " + header + " WHERE payment_type='Voucher'"
+            "Select SUM(amount) FROM " + header + " WHERE payment_type='Expense'"
         )
         voucher_sum = cursor.fetchall()
     conn.close()
@@ -188,7 +189,7 @@ def cashbook(header):
             + "("
             + query
             + ")"
-            + "WHERE payment_type='Receipt'"
+            + "WHERE payment_type='Income'"
         )
         receipt_amount = cursor.fetchall()
     conn.close()
@@ -199,7 +200,7 @@ def cashbook(header):
             + "("
             + query
             + ")"
-            + "WHERE payment_type='Voucher'"
+            + "WHERE payment_type='Expense'"
         )
         voucher_amount = cursor.fetchall()
     conn.close()
@@ -250,7 +251,7 @@ def generate_income_expense_query(headers_list, receipt_payment):
 
 
 def income_expense(headers):
-    query = generate_income_expense_query(headers, "Receipt")
+    query = generate_income_expense_query(headers, "Income")
     print(query)
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
@@ -258,7 +259,7 @@ def income_expense(headers):
         income_row = cursor.fetchall()
 
     conn.close()
-    query = generate_income_expense_query(headers, "Voucher")
+    query = generate_income_expense_query(headers, "Expense")
     print(query)
     with sqlite3.connect("jac_accounts.db") as conn:
         cursor = conn.cursor()
@@ -274,7 +275,7 @@ def income_expense(headers):
             + "("
             + query
             + ")"
-            + "WHERE payment_type='Receipt'"
+            + "WHERE payment_type='Income'"
         )
         receipt_total = cursor.fetchall()
 
@@ -286,7 +287,7 @@ def income_expense(headers):
             + "("
             + query
             + ")"
-            + "WHERE payment_type='Voucher'"
+            + "WHERE payment_type='Expense'"
         )
         voucher_total = cursor.fetchall()
 

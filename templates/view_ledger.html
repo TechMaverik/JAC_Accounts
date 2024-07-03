@@ -80,19 +80,24 @@
             {%if ledger!=None%}  
             {%for row in ledger%}        
             <tr>
-              {%if row[6]=="Voucher"%}
+              {%if row[6]=="Expense"%}
                 <td style="color: red;">{{row[4]}}</td>  
                 <td style="color: red;">{{row[2]}}</td>  
                 <td style="color: red;">{{row[6]}}</td>  
                 <td style="color: red;">{{row[1]}}</td>  
                 <td style="color: red;">{{row[3]}}</td>  
+                <td>
+                  <button type="" class="btn btn-success">Edit</button>
+                  </td>
               {%endif%}
-              {%if row[6]=="Receipt"%}
+              {%if row[6]=="Income"%}
                 <td style="color: green;">{{row[4]}}</td>  
                 <td style="color: green;">{{row[2]}}</td>  
                 <td style="color: green;">{{row[6]}}</td>  
                 <td style="color: green;">{{row[1]}}</td>  
                 <td style="color: green;">{{row[3]}}</td>  
+                <td><button type="" class="btn btn-success">Edit</button> </td>
+             
               {%endif%}
               
                           
@@ -106,12 +111,12 @@
       
       {%if receipt_sum!=None%} 
       {%for amt in receipt_sum %}
-      <h3>Total Receipt Amount: {{receipt_sum[0][0]}} INR </h3> 
+      <h3>Total Income Amount: {{receipt_sum[0][0]}}   ₹ </h3> 
       {%endfor%}    
       {%endif%} 
       {%if voucher_sum!=None%} 
       {%for amt in voucher_sum %}
-      <h3>Total Voucher Amount: {{voucher_sum[0][0]}} INR </h3> 
+      <h3>Total Expense Amount: {{voucher_sum[0][0]}}   ₹ </h3> 
       {%endfor%}    
       {%endif%} 
       

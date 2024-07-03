@@ -85,7 +85,7 @@ def generate_receipt():
         date = request.form.get("date")
         amount = request.form.get("amount")
 
-        if payment_type == "Receipt":
+        if payment_type == "Income":
             mapper.generate_receipt(
                 ID,
                 name,
@@ -101,7 +101,7 @@ def generate_receipt():
             counter_file.write(str(data))
             counter_file.close()
 
-        elif payment_type == "Voucher":
+        elif payment_type == "Expense":
             mapper.generate_receipt(
                 ID,
                 name,

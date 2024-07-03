@@ -64,7 +64,7 @@
             <tr>
               <td style="color: green;">{{data[4]}}</td>
               <td style="color: green;">{{data[2]}}</td>
-              <td style="color: green;">{{data[6]}}</td>
+              <td style="color: green;">{{data[7]}}</td>
               <td style="color: green;">{{data[1]}}</td>
               <td style="color: green;">{{data[3]}}</td>
             </tr>
@@ -72,7 +72,7 @@
           </tbody>
           {%endfor%}
       </table>
-      <b>Receipt Total: {{receipt_total[0][0]}}</b>
+      <b>Income Total: {{receipt_total[0][0]}}</b>
       <h4><small>EXPENDITURE</small></h4>
       <hr>
       
@@ -90,7 +90,7 @@
             <tr>
               <td style="color: red;">{{data[4]}}</td>
               <td style="color: red;">{{data[2]}}</td>
-              <td style="color: red;">{{data[6]}}</td>
+              <td style="color: red;">{{data[7]}}</td>
               <td style="color: red;">{{data[1]}}</td>
               <td style="color: red;">{{data[3]}}</td>
             </tr>
@@ -98,12 +98,12 @@
           </tbody>
           {%endfor%}
       </table>
-      <b>Voucher Total: {{voucher_total[0][0]}}</b>
+      <b>Expense Total: {{voucher_total[0][0]}}</b>
       {%if colors=="red"%}
-      <h2 style="color: red;">{{comment}} : {{balance}} INR</h2>
+      <h2 style="color: red;">{{comment}} : {{balance}}   ₹</h2>
       {%endif%}
       {%if colors=="blueviolet"%}
-      <h2 style="color: blueviolet;">{{comment}} : {{balance}} INR</h2>
+      <h2 style="color: blueviolet;">{{comment}} : {{balance}}   ₹</h2>
       {%endif%}
     </div>
       <br><br>
