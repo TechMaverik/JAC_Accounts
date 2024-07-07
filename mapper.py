@@ -320,3 +320,61 @@ def get_company_details():
         rows = cursor.fetchall()
     conn.close()
     return rows
+
+
+def get_expense_plotting_data():
+    with sqlite3.connect("jac_accounts.db") as conn:
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS HospitalExpense FROM HospitalExpense")
+        hospital_expense_amt = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS CarLoan FROM CarLoan")
+        car_loan_amt = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) FROM EMI")
+        emi_amt = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS Electricity_bill FROM Electricity_bill")
+        electricity_bill = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS Food FROM Food")
+        food_amt = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS Groceries FROM Groceries")
+        groceries_amt = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS HouseRent FROM HouseRent")
+        house_rent_amt = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS Infotainment FROM Infotainment")
+        infotainment_amt = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS Others FROM Others")
+        others_amt = cursor.fetchall()
+
+        cursor = conn.cursor()
+        cursor.execute("Select SUM(amount) AS Steam FROM Steam")
+        steam_amt = cursor.fetchall()
+
+    conn.close()
+    return (
+        hospital_expense_amt,
+        car_loan_amt,
+        emi_amt,
+        electricity_bill,
+        food_amt,
+        groceries_amt,
+        house_rent_amt,
+        infotainment_amt,
+        others_amt,
+        steam_amt,
+    )

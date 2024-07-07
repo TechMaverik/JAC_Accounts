@@ -244,5 +244,77 @@ def create_company():
     )
 
 
+@app.route("/plot_expense", methods=["get", "post"])
+def get_expense_plotting_data():
+
+    (
+        hospital_expense_amt,
+        car_loan_amt,
+        emi_amt,
+        electricity_bill,
+        food_amt,
+        groceries_amt,
+        house_rent_amt,
+        infotainment_amt,
+        others_amt,
+        steam_amt,
+    ) = mapper.get_expense_plotting_data()
+
+    try:
+        hospital_expense_amt = hospital_expense_amt[0][0]
+    except:
+        hospital_expense_amt = 0
+    try:
+        car_loan_amt = car_loan_amt[0][0]
+    except:
+        car_loan_amt = 0
+    try:
+        emi_amt = emi_amt[0][0]
+    except:
+        emi_amt = 0
+    try:
+        electricity_bill = electricity_bill[0][0]
+    except:
+        electricity_bill = 0
+    try:
+        food_amt = food_amt[0][0]
+    except:
+        food_amt = 0
+    try:
+        groceries_amt = groceries_amt[0][0]
+    except:
+        groceries_amt = 0
+    try:
+        house_rent_amt = house_rent_amt[0][0]
+    except:
+        house_rent_amt = 0
+    try:
+        infotainment_amt = infotainment_amt[0][0]
+    except:
+        infotainment_amt = 0
+    try:
+        others_amt = others_amt[0][0]
+    except:
+        others_amt = 0
+    try:
+        steam_amt = steam_amt[0][0]
+    except:
+        steam_amt = 0
+
+    data = {
+        "hospital_expense_amt": hospital_expense_amt,
+        "car_loan_amt": car_loan_amt,
+        "emi_amt": emi_amt,
+        "electricity_bill": electricity_bill,
+        "food_amt": food_amt,
+        "groceries_amt": groceries_amt,
+        "house_rent_amt": house_rent_amt,
+        "infotainment_amt": infotainment_amt,
+        "others_amt": others_amt,
+        "steam_amt": steam_amt,
+    }
+    return data
+
+
 if __name__ == "__main__":
     app.run("localhost", 5000, debug=True)
