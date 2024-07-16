@@ -378,3 +378,21 @@ def get_expense_plotting_data():
         others_amt,
         steam_amt,
     )
+
+
+def delete_all_table_contents(ledger_heads):
+    with sqlite3.connect("jac_accounts.db") as conn:
+        cur = conn.cursor()
+        for head in ledger_heads:
+            cur.execute("DELETE from " + str(head))
+            conn.commit()
+    conn.close()
+    counter_file = open("static/receipt_counter.txt", "w")
+    counter_file.write(str(1))
+    counter_file.close()
+    counter_file = open("static/voucher_counter.txt", "w")
+    counter_file.write(str(1))
+    counter_file.close()
+    counter_file = open("static/opening_balance.txt", "w")
+    counter_file.write(str(1))
+    counter_file.close()

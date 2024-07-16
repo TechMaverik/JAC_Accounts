@@ -51,12 +51,32 @@
       <hr>
       <br>
     
+      
+      <form action="export_json" method="Post">
+        <div class="form-group">         
+          <label for="ID">Export File Name</label>
+          <select  class="form-group" name="month">
+            {%for option in months %}
+            <option>{{option}}</option>
+            {%endfor%}          
+          </select>          
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-success">Export Cumulative Expense as JSON</button>
+          </div>
+      </form>
+
+      <form action="delete_all_table_contents", method="post">
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger">Delete All Table Data</button>
+        </div>
+      </form>
+      
       <form action="erase_all_data", method="post">
         <div class="form-group">
             <button type="submit" class="btn btn-danger">Erase All Data</button>
         </div>
       </form>
-      
     </div>
       <br><br>
     </div>

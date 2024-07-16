@@ -170,3 +170,8 @@ def create_company():
         address = request.form["address"]
         status = mapper.create_company(id, company, gst, address)
         return status
+
+
+def delete_all_table_contents():
+    ledger_heads = get_ledgerlist()
+    mapper.delete_all_table_contents(ledger_heads)

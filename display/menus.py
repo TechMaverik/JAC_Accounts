@@ -19,21 +19,15 @@ dashboard_menus = {
     "View Ledger": "/view_ledger",
     "Cash Book": "/cashbook",
     "Income and Expense": "/income_expense",
+    "Graphical Plotting": "/plotting",
     "Settings": "/settings",
 }
 
 gender = ["-", "Male", "Female"]
 yes_no = ["-", "Yes", "No"]
-receipt_payment = ["-","Income", "Expense", "Credit Balance", "Debit Balance"]
+receipt_payment = ["-", "Income", "Expense", "Credit Balance", "Debit Balance"]
 ledger_list_table = ["#", "Ledger Head", "Company Name", "Action"]
-ledger_view_table_head = [
-    "Date",
-    "No",
-    "Head",
-    "Party Details",
-    "Amount (₹)",
-    "Action"
-]
+ledger_view_table_head = ["Date", "No", "Head", "Party Details", "Amount (₹)", "Action"]
 cashbook_table = [
     "Date",
     "No",
@@ -41,8 +35,8 @@ cashbook_table = [
     "Party Details",
     "Amount(₹)",
 ]
-payment_type = ["-","Cash", "Cheque"]
-amount_types=["-","Credit Account","Debit Account"]
+payment_type = ["-", "Cash", "Cheque"]
+amount_types = ["-", "Credit Account", "Debit Account"]
 income_table = [
     "Date",
     "No",
@@ -55,4 +49,18 @@ company_details = [
     "Company Name",
     "GST",
     "Address",
+]
+months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
 ]
