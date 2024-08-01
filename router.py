@@ -415,8 +415,8 @@ def delete_all_table_contents():
 
 @app.route("/plotting", methods=["get", "post"])
 def plotting():
-    return redirect("http://192.168.1.3:1880/ui")
+    return redirect("http://192.168.1.13:1880/ui")
 
 
 if __name__ == "__main__":
-    app.run("localhost", 5000, debug=True)
+    app.run("localhost", 5000, debug=False)

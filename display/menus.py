@@ -27,21 +27,21 @@ gender = ["-", "Male", "Female"]
 yes_no = ["-", "Yes", "No"]
 receipt_payment = ["-", "Income", "Expense", "Credit Balance", "Debit Balance"]
 ledger_list_table = ["#", "Ledger Head", "Company Name", "Action"]
-ledger_view_table_head = ["Date", "No", "Head", "Party Details", "Amount (₹)", "Action"]
+ledger_view_table_head = ["Date", "No", "Head", "Description", "Amount (₹)", "Action"]
 cashbook_table = [
     "Date",
     "No",
     "Ledger Head",
-    "Party Details",
+    "Description",
     "Amount(₹)",
 ]
-payment_type = ["-", "Cash", "Cheque"]
+payment_type = ["-", "Cheque", "Cash"]
 amount_types = ["-", "Credit Account", "Debit Account"]
 income_table = [
     "Date",
     "No",
     "Head",
-    "Party Details",
+    "Description",
     "Amount(₹)",
 ]
 company_details = [
