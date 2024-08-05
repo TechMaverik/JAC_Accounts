@@ -413,6 +413,39 @@ def delete_all_table_contents():
     )
 
 
+@app.route("/get_exported_monthly_expense", methods=["get", "post"])
+def get_exported_monthly_expense():
+    jan = json.load(open("exports/January.json", "r"))
+    feb = json.load(open("exports/February.json", "r"))
+    march = json.load(open("exports/March.json", "r"))
+    apr = json.load(open("exports/April.json", "r"))
+    may = json.load(open("exports/May.json", "r"))
+    jun = json.load(open("exports/June.json", "r"))
+    jul = json.load(open("exports/July.json", "r"))
+    aug = json.load(open("exports/August.json", "r"))
+    sep = json.load(open("exports/September.json", "r"))
+    octo = json.load(open("exports/October.json", "r"))
+    nov = json.load(open("exports/November.json", "r"))
+    dec = json.load(open("exports/December.json", "r"))
+
+    modified_json = {
+        "january": jan,
+        "february": feb,
+        "march": march,
+        "april": apr,
+        "may": may,
+        "june": jun,
+        "july": jul,
+        "august": aug,
+        "september": sep,
+        "october": octo,
+        "november": nov,
+        "december": dec,
+    }
+
+    return modified_json
+
+
 @app.route("/plotting", methods=["get", "post"])
 def plotting():
     return redirect("http://192.168.1.13:1880/ui")
